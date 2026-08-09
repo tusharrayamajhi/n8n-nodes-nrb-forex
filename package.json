@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-nrb-forex",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Get official foreign exchange rates published by Nepal Rastra Bank (Nepal's central bank) for n8n workflows",
     "license": "MIT",
     "homepage": "https://github.com/tusharrayamajhi/n8n-nodes-nrb-forex",
