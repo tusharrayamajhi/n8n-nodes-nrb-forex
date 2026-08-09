@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="darkblue"
     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="23 4 23 10 17 10"></polyline>
-    <polyline points="1 20 1 14 7 14"></polyline>
-    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+    <path d="M3 8h13M12 4l4 4-4 4"/>
+    <path d="M21 16H9M13 12l-4 4 4 4"/>
+    <text x="1" y="6.5" font-size="5.5" fill="darkblue" stroke="none" font-family="sans-serif">$</text>
+    <text x="13.5" y="21" font-size="5" fill="darkblue" stroke="none" font-family="sans-serif">Rs</text>
 </svg>
