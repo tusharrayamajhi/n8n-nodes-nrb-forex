@@ -1,7 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#8ab4f8"
-    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 8h13M12 4l4 4-4 4"/>
-    <path d="M21 16H9M13 12l-4 4 4 4"/>
-    <text x="1" y="6.5" font-size="5.5" fill="#8ab4f8" stroke="none" font-family="sans-serif">$</text>
-    <text x="13.5" y="21" font-size="5" fill="#8ab4f8" stroke="none" font-family="sans-serif">Rs</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+	<defs>
+		<mask id="nrbForexGapDark" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+			<rect width="64" height="64" fill="#fff"/>
+			<path d="M6 56 22 40l8 7 22-29" fill="none" stroke="#000" stroke-width="10" stroke-linejoin="round"/>
+			<circle cx="39" cy="35" r="10" fill="#000"/>
+		</mask>
+	</defs>
+	<g mask="url(#nrbForexGapDark)">
+		<path d="M3 58 21 20l9 15 9-25 22 48z" fill="#A9B8CC"/>
+		<path d="m21 20-5 10.5 5-2.5 4 3.5zM39 10l-5 14 5-3 5 3z" fill="#fff"/>
+	</g>
+	<path d="M6 56 22 40l8 7 22-29" fill="none" stroke="#FF4D6A" stroke-width="6" stroke-linejoin="round"/>
+	<path d="m60 7-2.6 17-13-9.800z" fill="#FF4D6A"/>
+	<circle cx="39" cy="35" r="7" fill="#FFC145"/>
 </svg>

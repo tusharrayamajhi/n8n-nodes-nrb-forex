@@ -67,8 +67,13 @@ export const exchangeRateGetManyDescription: INodeProperties[] = [
 					properties: {
 						continue: '={{ $response.body.data.payload !== null && $response.body.pagination.links.next !== null }}',
 						request: {
+							// Pagination qs replaces the whole query string, so carry the range forward.
+							// $response is empty on the first request, which must ask for page 1.
 							qs: {
-								page: '={{ $response.body.pagination.page + 1 }}',
+								from: '={{ $request.qs.from }}',
+								to: '={{ $request.qs.to }}',
+								per_page: '={{ $request.qs.per_page }}',
+								page: '={{ ($response.body?.pagination?.page ?? 0) + 1 }}',
 							},
 						},
 					},
@@ -77,18 +82,34 @@ export const exchangeRateGetManyDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Per Page',
-		name: 'perPage',
+		displayName: 'Limit',
+		name: 'limit',
 		type: 'number',
 		typeOptions: {
 			minValue: 1,
 			maxValue: 100,
 		},
-		default: 30,
+		default: 50,
 		displayOptions: {
-			show: showOnlyForExchangeRateGetMany,
+			show: { ...showOnlyForExchangeRateGetMany, returnAll: [false] },
 		},
-		description: 'Number of days of rates to return per API page (max 100)',
+		description: 'Max number of results to return',
+		hint: 'Counts days, not items. Each day returns one item per currency.',
+		routing: {
+			send: {
+				type: 'query',
+				property: 'per_page',
+			},
+		},
+	},
+	{
+		displayName: 'Page Size',
+		name: 'pageSize',
+		type: 'hidden',
+		default: 100,
+		displayOptions: {
+			show: { ...showOnlyForExchangeRateGetMany, returnAll: [true] },
+		},
 		routing: {
 			send: {
 				type: 'query',

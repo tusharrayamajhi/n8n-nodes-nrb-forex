@@ -25,16 +25,17 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 ### Exchange Rate
 
-- **Get** — Get the official NRB rate for a single **Currency** on a given **Date** (defaults to
-  the latest published rate if left empty). Throws a clear error listing valid currency codes if
-  the requested one isn't found. A **Simplify** toggle returns just that currency's rate
-  (`date`, `currencyIso3`, `currencyName`, `unit`, `buy`, `sell`), or turn it off to get the raw
-  API response for that date.
-- **Get Many** — Get official NRB exchange rates for a date range (`From` / `To`). Supports
-  **Return All** to auto-paginate across the full range, or a **Per Page** limit for a single
-  page. A **Simplify** toggle flattens the nested response into one item per currency per date
-  (`date`, `currencyIso3`, `currencyName`, `unit`, `buy`, `sell`), or turn it off to get the raw
-  API response.
+- **Get**: Get the official NRB rate for a single **Currency**. Add **Date** under **Options** to
+  pick a day. If you leave it empty, the node uses today's date. The node throws a clear error if
+  NRB has no rates for that date, or if the currency isn't found. A **Simplify** toggle returns
+  just that currency's rate (`date`, `publishedOn`, `modifiedOn`, `currencyIso3`, `currencyName`,
+  `unit`, `buy`, `sell`). Turn it off to get the raw API response for that date. Turn on **Let AI
+  Choose Currency** to let a connected AI Agent pick the currency when the node is used as a tool.
+- **Get Many**: Get official NRB exchange rates for a date range (`From` / `To`). Turn on
+  **Return All** to get the full range, or set a **Limit** of up to 100 days. Limit counts days,
+  not items, and each day returns one item per currency. A **Simplify** toggle flattens the nested
+  response into one item per currency per date, with the same fields as Get. Turn it off to get
+  the raw API response.
 
 ## Credentials
 
@@ -48,8 +49,9 @@ Built and tested against n8n's community node CLI (`@n8n/node-cli`), declarative
 
 ## Usage
 
-Rates are per `unit` of foreign currency in NPR — most currencies are quoted per 1 unit, but INR
-is quoted per 100 units. Use the `unit` field from the response to normalize rates if needed.
+Rates are per `unit` of foreign currency in NPR. Most currencies are quoted per 1 unit, but INR and
+KRW are quoted per 100 units and JPY per 10 units. Divide `buy` and `sell` by `unit` to get the
+rate for one unit.
 
 ## Resources
 
@@ -58,5 +60,9 @@ is quoted per 100 units. Use the `unit` field from the response to normalize rat
 
 ## Version history
 
-- **0.1.0** — Initial release: Get Many exchange rates for a date range, with pagination and
-  simplified output.
+- **0.1.4**: Fixed Return All for ranges longer than one page. Replaced Per Page with Limit. Moved
+  Date into Options on Get, so set it again in existing workflows. Added a clear error for dates
+  with no rates. Changed the codex category to Finance & Accounting. New logo.
+- **0.1.3**: Added Let AI Choose Currency to Get.
+- **0.1.2**: Added the CI release workflow and a new icon.
+- **0.1.1**: Initial release.

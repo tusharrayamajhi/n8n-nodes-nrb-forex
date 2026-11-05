@@ -79,23 +79,6 @@ export const exchangeRateGetDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Date',
-		name: 'date',
-		type: 'dateTime',
-		default: '',
-		displayOptions: {
-			show: showOnlyForExchangeRateGet,
-		},
-		description: 'The date to get the rate for. Leave empty to get the latest published rate.',
-		routing: {
-			send: {
-				type: 'query',
-				property: 'date',
-				value: '={{ $value ? $value.split("T")[0] : undefined }}',
-			},
-		},
-	},
-	{
 		displayName: 'Simplify',
 		name: 'simplifyGet',
 		type: 'boolean',
@@ -121,7 +104,17 @@ export const exchangeRateGetDescription: INodeProperties[] = [
 						) as string;
 						const body = response.body as IDataObject;
 						const data = body.data as IDataObject;
-						const payload = data.payload as IDataObject;
+						const payload = data.payload as IDataObject | null;
+
+						if (!payload) {
+							const params = body.params as IDataObject | undefined;
+							throw new NodeOperationError(
+								this.getNode(),
+								`NRB has not published exchange rates for ${params?.date ?? 'the requested date'}`,
+								{ description: 'Try another date. Rates may not be published yet for today.' },
+							);
+						}
+
 						const rates = (payload.rates as IDataObject[]) ?? [];
 
 						const match = rates.find(
@@ -158,5 +151,31 @@ export const exchangeRateGetDescription: INodeProperties[] = [
 				],
 			},
 		},
+	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		placeholder: 'Add Option',
+		default: {},
+		displayOptions: {
+			show: showOnlyForExchangeRateGet,
+		},
+		options: [
+			{
+				displayName: 'Date',
+				name: 'date',
+				type: 'dateTime',
+				default: '',
+				description: "The date to get the rate for. Leave empty to use today's date.",
+				routing: {
+					send: {
+						type: 'query',
+						property: 'date',
+						value: '={{ $value ? $value.split("T")[0] : undefined }}',
+					},
+				},
+			},
+		],
 	},
 ];
